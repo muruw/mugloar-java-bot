@@ -1,6 +1,7 @@
 package mugloar;
 
 import mugloar.client.NewGame;
+import mugloar.client.ShopItemPurchase;
 import mugloar.client.SolveResult;
 
 public record GameState(
@@ -32,5 +33,16 @@ public record GameState(
                 result.score(),
                 result.highScore(),
                 result.turn());
+    }
+
+    public GameState withPurchase(ShopItemPurchase purchase) {
+        return new GameState(
+                gameId,
+                purchase.lives(),
+                purchase.gold(),
+                purchase.level(),
+                score,
+                highScore,
+                purchase.turn());
     }
 }
