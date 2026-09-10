@@ -2,3 +2,6 @@ target/
 
 .idea/
 *.iml
+
+# throwaway, goes with Runner#recordOdds
+probability-log.csv

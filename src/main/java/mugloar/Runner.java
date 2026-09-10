@@ -9,6 +9,10 @@ import mugloar.client.SolveResult;
 import mugloar.strategy.Action;
 import mugloar.strategy.Strategy;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 public class Runner {
@@ -65,6 +69,8 @@ public class Runner {
         log(after, result.success() ? "solved" : "failed", ad.probability(),
                 after.gold() - before.gold(), shorten(ad.message()));
 
+        // recordOdds(ad.probability(), result.success());
+
         return after;
     }
 
@@ -81,6 +87,20 @@ public class Runner {
     private static void log(GameState state, String what, String detail, int gold, String text) {
         System.out.printf("turn %3d | lives %d | gold %5d | score %5d | %-7s %-18s %+5d  %s%n",
                 state.turn(), state.lives(), state.gold(), state.score(), what, detail, gold, text);
+    }
+
+    /**
+     * used for figuring out how often different probability strings return true/false
+     */
+    private static void recordOdds(String probability, boolean success) {
+        try {
+            Files.writeString(
+                    Path.of("probability-log.csv"),
+                    "%s,%s%n".formatted(probability, success),
+                    StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            System.out.println("could not record the odds: " + e.getMessage());
+        }
     }
 
     private static String shorten(String message) {
