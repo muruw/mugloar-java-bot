@@ -27,3 +27,15 @@ What the bot does with each turn, in order:
   and a higher level makes future ads easier.
 - Otherwise it solves the best ad. Ties go to the ad that expires soonest.
 - If the board is empty and there is nothing to buy, the run stops.
+
+## Potential updates / TODO
+
+- Turns and levels should take each other into consideration. Sometimes the bot levels too much and it doesn't increase the odds.
+It could do something else instead. For example, stack on health potions
+- Bot doesn't use "investigation" endpoint at all. Not sure what it even does. Probably affects the quest outcomes but the 
+relation is hidden. It might be possible to take some words from quest's descriptions into consideration but not sure.
+- Picking an ad should be the default case. I think "investigation" (because it doesn't cost gold, nor it loses lives)
+should be the default case. Bot shouldn't solve impossible ad-s, instead it should wait for solvable ones.
+- run bots in parallel.
+- add retries to POST/GET endpoints
+- For funs, let LLM make decisions instead by replacing the decisions method with a call/promt to an LLM.
