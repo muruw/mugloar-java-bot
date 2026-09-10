@@ -12,6 +12,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Dragons of Mugloar public api endpoints
@@ -39,9 +40,16 @@ public class MugloarClient {
         return post("/%s/investigate/reputation".formatted(gameId), Reputation.class);
     }
 
-    /** Get all messages from the message board. */
+    /**
+     * Get all messages from the message board.
+     * <br>
+     * Decrypt all ancryped/scrambled ads
+     */
     public List<Message> getMessages(String gameId) {
-        return get("/%s/messages".formatted(gameId), Message.class);
+        return get("/%s/messages".formatted(gameId), Message.class).stream()
+                .map(MessageDecoder::decode)
+                .flatMap(Optional::stream)
+                .toList();
     }
 
     /** Try to solve one of the messages from the message board. */
