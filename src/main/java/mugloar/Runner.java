@@ -27,7 +27,7 @@ public class Runner {
      * <br>
      * The run ends when the lives are gone
      */
-    public GameState play() {
+    public void play() {
         GameState state = GameState.of(client.startGame());
         System.out.printf("game %s | lives %d | gold %d | level %d%n",
                 state.gameId(), state.lives(), state.gold(), state.level());
@@ -56,8 +56,6 @@ public class Runner {
         }
 
         System.out.printf("final score %d after %d turns%n", state.score(), state.turn());
-
-        return state;
     }
 
     private GameState solve(GameState before, Message ad) {
